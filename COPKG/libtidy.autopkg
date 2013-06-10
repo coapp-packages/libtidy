@@ -1,0 +1,71 @@
+configurations {
+		
+};
+
+nuget {
+	// the nuspec file metadata. Gets created/updated on build
+	nuspec {
+		id = libtidy;
+		version : 1.46;
+		title: HTML Tidy Library Project;
+		authors: {Tidy contributors};
+		owners: {CoApp Project, Tom Hanrahan};
+		licenseUrl: "http://tidy.sourceforge.net/#license";
+		projectUrl: "http://tidy.sourceforge.net";
+		iconUrl: "http://tidy.sourceforge.net/docs/tidy.gif";
+		requireLicenseAcceptance:false;
+		summary:tidy HTML cleanup tool;
+		description: @"Clean up your Web pages with HTML TIDY
+	Tidy homepage:  http://tidy.sourceforge.net/";
+		releaseNotes: "Release of Tidy 1.46";
+		copyright: Copyright 2013;
+		tags: { tidy, native, CoApp };
+
+	};
+
+	// the files that go into the content folders
+	// (inserted into the nuspec file)
+	files {
+		include: {  ..\include\*.h,
+					..\src\*.h
+		};
+
+		docs: { 
+            ..\htmldoc\*.gif,
+            ..\htmldoc\*.cfg,
+			..\htmldoc\*.xsl,
+			..\htmldoc\*.css,
+			..\htmldoc\*.html																	
+        };
+    
+			("v100,v110", "Win32,x64", "release,debug", "Dynamic") => {
+			[${0},${1},${2},${3}] {
+				lib:     { .\output\${0}\${1}\${2}\${3}\libtidy.lib };
+				bin:     { .\output\${0}\${1}\${2}\${3}\libtidy.dll };
+				symbols: { .\output\${0}\${1}\${2}\${3}\libtidy.pdb };
+			};
+		};
+		("v100,v110", "Win32,x64", "release,debug", "Static,ltcg", "cdecl") => {
+			[${0},${1},${2},${3},${4}] {
+				lib:     { .\output\${0}\${1}\${2}\${3}\libtidy.lib };
+			};
+		};
+
+	};
+
+	// the VC++ .props file that gets generated and inserted into the ${d_content} folder
+	props { 
+		// we're going to generate a number of properties anyway. 
+        // so even if the packager doesn't specify the props object 
+        // we're going to make this file.
+	};
+
+	// the VC++ .targets file that gets generated and inserted into the ${d_content} folder
+	targets {
+		// every configuration needs to reference the include directories.
+		Defines += HAS_LIBTIDY;
+
+			
+	};
+}
+

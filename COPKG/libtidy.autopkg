@@ -6,7 +6,7 @@ nuget {
 	// the nuspec file metadata. Gets created/updated on build
 	nuspec {
 		id = libtidy;
-		version : 1.46;
+		version : 1.46.0.1;
 		title: HTML Tidy Library Project;
 		authors: {Tidy contributors};
 		owners: {CoApp Project, Tom Hanrahan};
